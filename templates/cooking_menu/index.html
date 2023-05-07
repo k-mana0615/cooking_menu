@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トップメニュー</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- 自作CSS -->
+    <link rel="stylesheet" href="{% static 'cooking_menu/css/style.css' %}">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+</head>
+<body class="container">
+    <h1>トップメニュー</h1><br><br>
+    <!-- トリガーの部分 -->
+    <p class="nav-open">クリックで開閉</p>
+    <!-- メニューの部分 -->
+    <nav>
+    	<ul>
+            <li><a href="{% url 'large_category' %}" >大カテゴリ検索</a></li>
+            <li><a href="{% url 'medium_category' %}" >中カテゴリ検索</a></li>
+            <li><a href="{% url 'small_category' %}" >小カテゴリ検索</a></li>
+            <li><a href="{% url 'find' %}" >テキスト検索</a></li>
+            <li><a href="{% url 'favorite_page' %}" >お気に入り確認</li>
+            <li><a href="{% url 'favorite' %}" >お気に入り登録</li>
+            <li><a href="{% url 'favorite_js' %}" >お気に入り登録_JS版</li>
+        </ul>
+    </nav>
+
+    <table class="table">
+        <tr>
+            <td><h4><a href="{% url 'large_category' %}" >大カテゴリ検索</a></h4></td>
+            <td><h4><a href="{% url 'medium_category' %}" >中カテゴリ検索</a></h4></td>
+            <td><h4><a href="{% url 'small_category' %}" >小カテゴリ検索</a></h4></td>
+        <tr>
+        <tr>
+            <td><h4><a href="{% url 'find' %}" >テキスト検索</a></h4></td>
+            <td><h4><a href="{% url 'favorite_page' %}" >お気に入り確認</a></h4></td>
+        <tr>
+        <tr>
+            <td><h4><a href="{% url 'favorite' %}" >お気に入り登録</a></h4></td>
+            <td><h4><a href="{% url 'favorite_js' %}" >お気に入り登録_JS版</a></h4></td>            
+        <tr>
+        </table>
+
+    <!-- JSファイルを読み込む -->
+    <script src="{% static 'cooking_menu/js/menu_jQuery.js' %}"></script>
+
+</body>
+</html>

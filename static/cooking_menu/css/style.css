@@ -1,0 +1,17 @@
+nav{ display: none; }
+
+.nav-open{
+	padding: 15px;
+	color: #fff;
+	font-size: 20px;
+	background: #2073c8;
+	position: relative;
+}
+.nav-open::before{/* 閉じている時 */
+	content: "＋";
+	position: absolute;
+	right: 20px;
+}
+.nav-open.active::before{/* 開いている時 */
+	content: "－";
+}

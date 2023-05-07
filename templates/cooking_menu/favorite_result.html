@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body class="container">
+    <br><h4><a href="{% url 'index' %}" >トップページへ戻る</a></h4>
+    <br><h4><a href="{% url 'favorite' %}" >お気に入り登録へ戻る</a></h4>
+        
+        <!-- recipe存在有無 -->
+        {% if recipe %}
+            <table class="table">
+                <tr>
+                    <th colspan="3">以下のメニューをお気に入り登録しました</th>
+                </tr>
+                <tr>
+                    <th>レシピID</th>
+                    <th>料理名</th>
+                    <th>URL</th>
+                </tr>
+
+                {% for r in recipe %}
+                <tr>
+                    <td>{{r.recipe_id}}</td>
+                    <td>{{r.recipe_title}}</td>
+                    <td>{{r.recipe_url}}</td>    
+                <tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+    <br>
+    <br>
+        <!-- delete_recipe存在有無 -->
+        {% if delete_recipe %}
+            <table class="table">
+                <tr>
+                    <th colspan="3">以下のメニューをお気に入りから削除しました</th>
+                </tr>
+                <tr>
+                    <th>レシピID</th>
+                    <th>料理名</th>
+                    <th>URL</th>
+                </tr>
+
+                {% for r in delete_recipe %}
+                <tr>
+                    <td>{{r.recipe_id}}</td>
+                    <td>{{r.recipe_title}}</td>
+                    <td>{{r.recipe_url}}</td>    
+                <tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+</body>
+</html>

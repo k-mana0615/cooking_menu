@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body class="container">
+    <br><h4><a href="{% url 'index' %}" >トップページへ戻る</a></h4>
+    {% if message %}
+        <br><h3>{{message}}</h3>
+    {% endif %}
+    <form action="{% url 'favorite_confirm' %}" method="post">
+        {% csrf_token %}
+    <table class="table">
+        <tr>
+            <th>レシピID</th>
+            <th>料理名</th>
+            <th>URL</th>
+            <th>お気に入り</th>
+        </tr>
+
+        {% for r in recipe %}
+        <tr>
+            <td>{{r.recipe_id}}</td>
+            <td>{{r.recipe_title}}</td>
+            <td><a href={{r.recipe_url}} target=”_blank”>{{r.recipe_url}}</a></td>
+            {% if r.favorite_flag %}
+                <td><label><input type="checkbox" name="favorite_flag" value="{{r.id}}" checked ></label></td>
+            {% else %}
+                <td><label><input type="checkbox" name="favorite_flag" value="{{r.id}}"></label></td>
+            {% endif %}
+        </form>
+    
+        <tr>
+        {% endfor %}
+    </table>
+<!--    <input type="submit" value="お気に入り更新確認へ">-->
+
+
+    <ul class="pagination">
+        {% if recipe.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="{% url 'favorite_js' %}">
+                &laquo; first</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" 
+            href="{% url 'favorite_js' %}/{{recipe.previous_page_number}}">
+                &laquo; prev</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link">
+                &laquo; first</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link">
+                &laquo; prev</a>
+        </li>
+        {% endif %}
+        <li class="page-item">
+            <a class="page-link">
+            {{recipe.number}}/{{recipe.paginator.num_pages}}</a>
+        </li>
+        {% if recipe.has_next %}
+        <li class="page-item">
+            <a class="page-link" 
+            href="{% url 'favorite_js' %}/{{recipe.next_page_number}}">
+                next &raquo;</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" 
+            href="{% url 'favorite_js' %}/{{recipe.paginator.num_pages}}">
+                last &raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link">
+                next &raquo;</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link">
+                last &raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- JSファイルを読み込む -->
+    <script src="{% static 'cooking_menu/js/ajax_csrf.js' %}"></script>
+    <script src="{% static 'cooking_menu/js/favorite_js.js' %}"></script>
+<!--    <script src="{% static 'cooking_menu/js/test.js' %}"></script>-->
+</body>
+</html>

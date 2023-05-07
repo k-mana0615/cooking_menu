@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body class="container">
+    <br><h4><a href="{% url 'index' %}" >トップページへ戻る</a></h4>
+    <table class="table">
+        <tr>
+            <th>レシピID</th>
+            <th>材料</th>
+            <th>料理名</th>
+            <th>URL</th>
+            <th>値段</th>
+            <th>調理時間</th>
+        </tr>
+
+        {% for r in recipe %}
+        <tr>
+            <td>{{r.recipe_id}}</td>
+            <td>
+                {% for material in r.recipe_material %}
+                    {{material}}<br>
+                {% endfor %}
+            </td>
+            <td>{{r.recipe_title}}</td>
+            <td><a href={{r.recipe_url}} target=”_blank”>{{r.recipe_url}}</a></td>
+            <td>{{r.recipe_cost}}</td>
+            <td>{{r.recipe_indication}}</td>
+        <tr>
+        {% endfor %}
+    </table>
+
+    <ul class="pagination">
+        {% if recipe.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="{% url 'favorite_page' %}">
+                &laquo; first</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" 
+            href="{% url 'favorite_page' %}/{{recipe.previous_page_number}}">
+                &laquo; prev</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link">
+                &laquo; first</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link">
+                &laquo; prev</a>
+        </li>
+        {% endif %}
+        <li class="page-item">
+            <a class="page-link">
+            {{recipe.number}}/{{recipe.paginator.num_pages}}</a>
+        </li>
+        {% if recipe.has_next %}
+        <li class="page-item">
+            <a class="page-link" 
+            href="{% url 'favorite_page' %}/{{recipe.next_page_number}}">
+                next &raquo;</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" 
+            href="{% url 'favorite_page' %}/{{recipe.paginator.num_pages}}">
+                last &raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link">
+                next &raquo;</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link">
+                last &raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+
+</body>
+</html>

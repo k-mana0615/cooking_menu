@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body class="container">
+    <br><h4><a href="{% url 'index' %}" >トップページへ戻る</a></h4>
+    {% if message %}
+    <br><h4><a href="{% url 'favorite' %}" >お気に入り登録へ戻る</a></h4>
+    {% endif %}
+    {% if message %}
+        <br><h3>{{message}}</h3>
+    <!-- message存在有無 -->
+    {% else %}
+        <form action="{% url 'favorite_result' %}" method="post">
+            {% csrf_token %}
+        
+        <!-- view_update_flag存在有無 -->
+        {% if view_update_flag %}
+            <table class="table">
+                <tr>
+                    <th colspan="3">以下のメニューをお気に入り登録します</th>
+                </tr>
+                <tr>
+                    <th>レシピID</th>
+                    <th>料理名</th>
+                    <th>URL</th>
+                </tr>
+
+                {% for r in recipe %}
+                <tr>
+                    <td>{{r.recipe_id}}</td>
+                    <td>{{r.recipe_title}}</td>
+                    <td>{{r.recipe_url}}</td>
+                    <td><input type="hidden" name="favorite_flag" value="{{r.id}}"></td>
+                <tr>
+                {% endfor %}
+            </table>
+        <!-- view_update_flag存在有無 -->
+        {% endif %}
+
+    <br>
+    <br>
+
+        <!-- view_delete_update_flag存在有無 -->
+        {% if view_delete_update_flag %}
+            <table class="table">
+                <tr>
+                    <th colspan="3">以下のメニューをお気に入りから削除します</th>
+                </tr>
+                <tr>
+                    <th>レシピID</th>
+                    <th>料理名</th>
+                    <th>URL</th>
+                </tr>
+
+                {% for r in delete_recipe %}
+                <tr>
+                    <td>{{r.recipe_id}}</td>
+                    <td>{{r.recipe_title}}</td>
+                    <td>{{r.recipe_url}}</td>
+                    <td><input type="hidden" name="delete_favorite_flag" value="{{r.id}}"></td>
+                <tr>
+                {% endfor %}
+                </form>
+            </table>
+        <!-- view_delete_update_flag存在有無 -->
+        {% endif %}
+
+        <input type="submit" value="お気に入り更新">
+    <!-- message存在有無 -->
+    {% endif %}
+</body>
+</html>
